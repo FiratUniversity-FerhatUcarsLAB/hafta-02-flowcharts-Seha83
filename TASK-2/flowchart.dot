@@ -1,0 +1,100 @@
+digraph AlisverisSepetSistemi {
+    rankdir=TB;
+    node [shape=rectangle, style=rounded, fontname="Arial", fontsize=10];
+    edge [fontname="Arial", fontsize=9];
+
+    // Başlangıç
+    Start [label="BAŞLA", shape=ellipse, style=filled, fillcolor=lightgreen];
+
+    // Giriş kontrolü
+    Login [label="Kullanıcı girişi:\nKullanıcı adı & Şifre al"];
+    LoginCheck [label="Giriş doğru mu?", shape=diamond];
+    LoginFail [label="Giriş başarısız!\nProgram sonlanır", shape=rectangle, fillcolor=mistyrose, style=filled];
+    Categories [label="Ürün kategorilerini göster\nve seçim al"];
+
+    // Ürün seçimi
+    ProductSelect [label="Ürün seçildi mi? (0 = Geri)", shape=diamond];
+    StockCheck [label="Stok var mı?", shape=diamond];
+    AddCart [label="Ürün sepete eklendi\nstok -1", shape=rectangle, fillcolor=lightyellow, style=filled];
+    NoStock [label="Stokta yok!", shape=rectangle, fillcolor=mistyrose, style=filled];
+
+    // Sepet işlemleri
+    ViewCart [label="Sepeti görüntüle\ntoplam tutarı hesapla"];
+    EditCart [label="Sepeti düzenle (ürün sil)?", shape=diamond];
+    RemoveItem [label="Ürün silindi", shape=rectangle];
+
+    // İndirim
+    DiscountAsk [label="İndirim kodu var mı?", shape=diamond];
+    DiscountApply [label="Kod doğru mu?", shape=diamond];
+    DiscountYes [label="10% indirim uygulanır", shape=rectangle, fillcolor=lightyellow, style=filled];
+    DiscountNo [label="Geçersiz kod", shape=rectangle, fillcolor=mistyrose, style=filled];
+
+    // Minimum tutar
+    MinCheck [label="Tutar >= 50 TL mi?", shape=diamond];
+    MinFail [label="50 TL altı: İşlem sonlanır", shape=rectangle, fillcolor=mistyrose, style=filled];
+
+    // Kargo
+    CargoCheck [label="Tutar >= 200 TL mi?", shape=diamond];
+    CargoFree [label="Kargo Ücretsiz", shape=rectangle, fillcolor=lightyellow, style=filled];
+    CargoFee [label="Kargo: 30 TL", shape=rectangle];
+
+    // Ödeme
+    PaymentSelect [label="Ödeme yöntemi seç:\n1-Kredi Kartı, 2-Kapıda", shape=rectangle];
+    PaymentCheck [label="Geçerli seçim mi?", shape=diamond];
+    PaymentFail [label="Geçersiz seçim\nProgram sonlanır", shape=rectangle, fillcolor=mistyrose, style=filled];
+
+    // Onay
+    Summary [label="Sipariş Özeti:\nÜrünler, Toplam, İndirim, Kargo, Ödeme"];
+    Confirm [label="Onaylıyor musunuz?", shape=diamond];
+    ConfirmYes [label="Sipariş Onaylandı!\nTeşekkürler.", shape=rectangle, fillcolor=lightgreen, style=filled];
+    ConfirmNo [label="Sipariş İptal Edildi", shape=rectangle, fillcolor=mistyrose, style=filled];
+
+    End [label="BİTİR", shape=ellipse, style=filled, fillcolor=lightblue];
+
+    // Akış bağlantıları
+    Start -> Login -> LoginCheck;
+    LoginCheck -> Categories [label="Evet"];
+    LoginCheck -> LoginFail [label="Hayır"];
+    LoginFail -> End;
+
+    Categories -> ProductSelect;
+    ProductSelect -> StockCheck [label="Evet"];
+    ProductSelect -> ViewCart [label="0"];
+
+    StockCheck -> AddCart [label="Evet"];
+    StockCheck -> NoStock [label="Hayır"];
+    AddCart -> Categories;
+    NoStock -> Categories;
+
+    ViewCart -> EditCart;
+    EditCart -> RemoveItem [label="Evet"];
+    EditCart -> DiscountAsk [label="Hayır"];
+    RemoveItem -> ViewCart;
+
+    DiscountAsk -> DiscountApply [label="Evet"];
+    DiscountAsk -> MinCheck [label="Hayır"];
+    DiscountApply -> DiscountYes [label="Evet"];
+    DiscountApply -> DiscountNo [label="Hayır"];
+    DiscountYes -> MinCheck;
+    DiscountNo -> MinCheck;
+
+    MinCheck -> CargoCheck [label="Evet"];
+    MinCheck -> MinFail [label="Hayır"];
+    MinFail -> End;
+
+    CargoCheck -> CargoFree [label="Evet"];
+    CargoCheck -> CargoFee [label="Hayır"];
+    CargoFree -> PaymentSelect;
+    CargoFee -> PaymentSelect;
+
+    PaymentSelect -> PaymentCheck;
+    PaymentCheck -> Summary [label="Evet"];
+    PaymentCheck -> PaymentFail [label="Hayır"];
+    PaymentFail -> End;
+
+    Summary -> Confirm;
+    Confirm -> ConfirmYes [label="Evet"];
+    Confirm -> ConfirmNo [label="Hayır"];
+    ConfirmYes -> End;
+    ConfirmNo -> End;
+}
