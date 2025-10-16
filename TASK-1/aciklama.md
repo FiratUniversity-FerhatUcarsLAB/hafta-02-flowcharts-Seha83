@@ -1,9 +1,8 @@
 İsim - Soy isim İbrahim Seha DOĞAN
 Öğrenci No:250541021
 
-sistemin kısa açıklaması (maks. 5-6 satır)
-Bu sistem, ATM’de para çekme işlemini adım adım yönetir.
-Kullanıcı önce PIN’ini girer ve üç deneme hakkı vardır.
-PIN doğrulandıktan sonra, çekilmek istenen tutar 20 TL katı, bakiye ve günlük limit açısından kontrol edilir.
-Koşullar sağlanırsa para çekilir ve bakiye güncellenir.
-Kullanıcı isterse yeni bir işlem yapabilir veya sistemi sonlandırabilir.
+Bu sistem, kullanıcı giriş kontrolü sonrası çevrim içi alışveriş işlemlerini yöneten bir sepet uygulamasıdır.
+Kullanıcı ürün kategorileri arasında gezebilir, ürün seçip sepete ekleyebilir ve stok durumu kontrol edilir.
+Sepet görüntülenip düzenlenebilir, indirim kodu uygulanabilir ve minimum tutar şartı denetlenir.
+Kargo ücreti toplam tutara göre hesaplanır (200 TL üzeri ücretsiz).
+Son olarak kullanıcı ödeme yöntemini seçer ve siparişini onaylar.
